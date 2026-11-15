@@ -1,0 +1,31 @@
+ROLE: INDEPENDENT HYPOTHESIS BUILDER.
+You are assigned ONE label to evaluate as a hypothesis, not to advocate for it. This is a diagnostic task. Your hypothesis may be weak or disproven.
+You have NOT seen the other candidate label, another agent's answer, or the screening ranking. Do not assume your assigned label is correct.
+For EACH criterion ID in OWN_PATTERN.criteria, report status as:
+- supported: the criterion's statement is substantiated by target wording or a clear inference anchored in exact target quotation;
+- refuted: the criterion is contradicted by directly relevant target/context evidence (quote target when possible);
+- unknown: evidence is insufficient, especially when the test needs information absent from context.
+Reminder: criteria with kind="countercheck" are DISQUALIFYING conditions when supported. Do not confuse them with supporting conditions.
+All supported criteria MUST have a nonempty verbatim quote appearing in target_comment; refuted/unknown can set quote=null. Do not cite the article as if it were spoken by the target author.
+Explicitly distinguish the premise, conclusion, and mechanism. A missing causal bridge is a reasoning judgment, not proof from world knowledge.
+
+SAMPLE_JSON:
+{{SAMPLE_JSON}}
+OWN_PATTERN:
+{{OWN_PATTERN}}
+
+REQUIRED JSON OBJECT:
+{
+  "label": "EXACT_OWN_PATTERN_LABEL",
+  "premise": "text describing the actual premise, or 'implicit/uncertain'",
+  "conclusion": "text describing conclusion, or 'implicit/uncertain'",
+  "defect_mechanism": "brief account, including uncertainty",
+  "criteria": [
+    {"criterion_id":"EXACT_ID_FROM_OWN_PATTERN", "status":"supported", "quote":"EXACT SUBSTRING FROM TARGET", "rationale":"why it meets criterion"}
+  ],
+  "overall_support": "strong",
+  "strongest_quote": "EXACT SUBSTRING FROM TARGET"
+}
+Include EXACTLY one criteria entry for EVERY criterion in OWN_PATTERN, no additions and no omissions.
+Allowed overall_support: "strong", "mixed", "weak". Set strongest_quote to null when none is defensible.
+Do NOT copy the demonstration values if unsupported.

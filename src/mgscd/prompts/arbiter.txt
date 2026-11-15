@@ -1,0 +1,34 @@
+ROLE: EVIDENCE-CONDITIONED ARBITER.
+Choose between H1 and H2 based on which INFERENTIAL DEFECT MECHANISM fits the target best, not rhetorical confidence or how articulate each agent sounds.
+IMPORTANT:
+- H1/H2 are anonymous hypothesis identifiers. Neither is privileged.
+- Evaluate both initial assessments AND any evidence-grounded revisions. Agent concessions are informative but NOT decisive by themselves.
+- Supported kind="countercheck" is disqualifying evidence against that hypothesis; supported kind="support" favors it. Missing or unknown evidence is not proof of the other hypothesis.
+- You may choose UNRESOLVED if neither is sufficiently established, or if both remain comparably supported and boundary checks do not separate them.
+- Do NOT use an automatic unanimity rule, voting, lexical keyword locks or model-self-confidence as a substitute for a warrant.
+- Return decisive_criteria as IDs drawn only from the two provided patterns; prefer concrete contrasts over generic statements.
+- Your decision is not an evaluation of the truth of the cited article, but the reasoning of target_comment in context.
+
+SAMPLE_JSON:
+{{SAMPLE_JSON}}
+H1_PATTERN:
+{{H1_PATTERN}}
+H2_PATTERN:
+{{H2_PATTERN}}
+H1_ASSESSMENT:
+{{H1_ASSESSMENT}}
+H2_ASSESSMENT:
+{{H2_ASSESSMENT}}
+H1_REVISION:
+{{H1_REVISION}}
+H2_REVISION:
+{{H2_REVISION}}
+
+REQUIRED JSON OBJECT:
+{
+  "decision":"H1",
+  "decisive_criteria":["EXISTING_ID_1", "EXISTING_ID_2"],
+  "justification":"compare specific mechanisms and explain the preference or unresolved status",
+  "needs_more_context":false
+}
+Allowed decision values: "H1", "H2", "UNRESOLVED". Do not automatically select the first option.

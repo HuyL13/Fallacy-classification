@@ -1,0 +1,313 @@
+{
+  "version": "mgscd-grounded-v3-adaptation-v1",
+  "patterns": [
+    {
+      "label": "appeal_to_authority",
+      "definition": "A source's status substitutes for adequate justification of a claim. Identify source, asserted claim and the authority-to-truth step. A named example or qualified testimony is not automatically fallacious; do not infer incompetence from missing citations.",
+      "mechanism": "A source's status substitutes for adequate justification of a claim. Identify source, asserted claim and the authority-to-truth step. A named example or qualified testimony is not automatically fallacious; do not infer incompetence from missing citations.",
+      "logical_form": "Person/Source P asserts claim C -> Therefore C is true (without domain-relevant empirical justification).",
+      "cue_examples": [
+        "According to [expert/celebrity/title]...",
+        "Listen to the experts instead of questioning...",
+        "Dr./Professor X said that...",
+        "Citing prestige or official status as the sole verification."
+      ],
+      "criteria": [
+        {
+          "id": "AA1",
+          "kind": "support",
+          "statement": "A source or person is offered as warrant for a claim."
+        },
+        {
+          "id": "AA2",
+          "kind": "support",
+          "statement": "The source status substitutes for adequate justification of the conclusion."
+        },
+        {
+          "id": "AAX1",
+          "kind": "countercheck",
+          "statement": "The target relies on qualified testimony with relevant evidence rather than status as a substitute."
+        }
+      ],
+      "contrasts": [
+        "appeal_to_tradition",
+        "appeal_to_majority"
+      ],
+      "source_note": "MG-SCD operationalization v1 adapted from local Grounded v3 DEFINITIONS (2026-11-11); forms/cues from COCOLOFA_PATTERNS, illustrative only. Not verbatim paper extraction. Boundary choices: decisive/illicit warrant; distinguishable concerns may be related; slope requires escalation, not just negative prediction. Manual dev alignment required."
+    },
+    {
+      "label": "appeal_to_majority",
+      "definition": "Popularity or widespread acceptance is used to establish truth or correctness. Identify the popular belief and the conclusion it supposedly proves. Describing opinion or preferences for a legitimate decision does not by itself establish this defect.",
+      "mechanism": "Popularity or widespread acceptance is used to establish truth or correctness. Identify the popular belief and the conclusion it supposedly proves. Describing opinion or preferences for a legitimate decision does not by itself establish this defect.",
+      "logical_form": "Group G (everyone, majority, X% of people) believes/endorses claim C -> Therefore C is valid/true.",
+      "cue_examples": [
+        "Everyone knows that...",
+        "Most people agree that...",
+        "51% of people believe...",
+        "It can't be that the entire world is wrong...",
+        "No one believes that anymore...",
+        "Appealing to popular vote or consensus as factual proof."
+      ],
+      "criteria": [
+        {
+          "id": "AM1",
+          "kind": "support",
+          "statement": "Popularity or widespread acceptance is invoked."
+        },
+        {
+          "id": "AM2",
+          "kind": "support",
+          "statement": "Popularity is used to establish truth or correctness."
+        },
+        {
+          "id": "AMX1",
+          "kind": "countercheck",
+          "statement": "The target only describes preferences, opinion or a legitimate collective decision."
+        },
+        {
+          "id": "AMX2",
+          "kind": "countercheck",
+          "statement": "The inference instead generalizes from limited cases to a population."
+        }
+      ],
+      "contrasts": [
+        "hasty_generalization",
+        "appeal_to_authority"
+      ],
+      "source_note": "MG-SCD operationalization v1 adapted from local Grounded v3 DEFINITIONS (2026-11-11); forms/cues from COCOLOFA_PATTERNS, illustrative only. Not verbatim paper extraction. Boundary choices: decisive/illicit warrant; distinguishable concerns may be related; slope requires escalation, not just negative prediction. Manual dev alignment required."
+    },
+    {
+      "label": "appeal_to_nature",
+      "definition": "Naturalness or artificiality is used to establish value, safety or correctness without an adequate bridge. Identify that value inference, not a mere biological description.",
+      "mechanism": "Naturalness or artificiality is used to establish value, safety or correctness without an adequate bridge. Identify that value inference, not a mere biological description.",
+      "logical_form": "X is natural -> Therefore X is good/safe/healthy; or Y is artificial/unnatural -> Therefore Y is bad/harmful.",
+      "cue_examples": [
+        "It's all-natural, so it's completely safe/healthy...",
+        "Unnatural chemicals / against nature...",
+        "Nature intended it this way...",
+        "Equating artificial or processed with inherently destructive or immoral."
+      ],
+      "criteria": [
+        {
+          "id": "AN1",
+          "kind": "support",
+          "statement": "Naturalness or artificiality is invoked."
+        },
+        {
+          "id": "AN2",
+          "kind": "support",
+          "statement": "Value, safety or correctness is inferred from naturalness without an adequate bridge."
+        },
+        {
+          "id": "ANX1",
+          "kind": "countercheck",
+          "statement": "The target offers specific empirical evidence rather than naturalness as the warrant."
+        }
+      ],
+      "contrasts": [
+        "appeal_to_tradition"
+      ],
+      "source_note": "MG-SCD operationalization v1 adapted from local Grounded v3 DEFINITIONS (2026-11-11); forms/cues from COCOLOFA_PATTERNS, illustrative only. Not verbatim paper extraction. Boundary choices: decisive/illicit warrant; distinguishable concerns may be related; slope requires escalation, not just negative prediction. Manual dev alignment required."
+    },
+    {
+      "label": "appeal_to_tradition",
+      "definition": "Longevity or customary practice is used to establish correctness or a requirement to preserve a practice. Historical background or affection alone is insufficient.",
+      "mechanism": "Longevity or customary practice is used to establish correctness or a requirement to preserve a practice. Historical background or affection alone is insufficient.",
+      "logical_form": "Practice/Belief X has been done for a long time / is traditional -> Therefore X is correct, optimal, or right.",
+      "cue_examples": [
+        "We have always done it this way...",
+        "Time-tested tradition proves...",
+        "Centuries of custom dictate that...",
+        "Traditional values must be maintained because of history."
+      ],
+      "criteria": [
+        {
+          "id": "AT1",
+          "kind": "support",
+          "statement": "Longevity or customary practice is invoked."
+        },
+        {
+          "id": "AT2",
+          "kind": "support",
+          "statement": "Historical persistence is used to establish correctness or the need to preserve the practice."
+        },
+        {
+          "id": "ATX1",
+          "kind": "countercheck",
+          "statement": "The target provides historical background or affection without a justificatory inference."
+        }
+      ],
+      "contrasts": [
+        "appeal_to_authority",
+        "appeal_to_nature"
+      ],
+      "source_note": "MG-SCD operationalization v1 adapted from local Grounded v3 DEFINITIONS (2026-11-11); forms/cues from COCOLOFA_PATTERNS, illustrative only. Not verbatim paper extraction. Boundary choices: decisive/illicit warrant; distinguishable concerns may be related; slope requires escalation, not just negative prediction. Manual dev alignment required."
+    },
+    {
+      "label": "appeal_to_worse_problems",
+      "definition": "A distinguishable, allegedly more serious problem B is used to dismiss or defer concern A without a supplied justification for that dismissal. A and B may be related. Identify both concerns and the dismissal; a warranted resource tradeoff is not enough.",
+      "mechanism": "A distinguishable, allegedly more serious problem B is used to dismiss or defer concern A without a supplied justification for that dismissal. A and B may be related. Identify both concerns and the dismissal; a warranted resource tradeoff is not enough.",
+      "logical_form": "Issue X is raised; Separate Problem Y exists where Severity(Y) > Severity(X) -> Therefore dismiss/ignore X.",
+      "cue_examples": [
+        "Why are we worrying about X when people are dying of Y?",
+        "There are far worse problems in the world than X...",
+        "First solve Y before complaining about X...",
+        "What about [greater external catastrophe]?"
+      ],
+      "criteria": [
+        {
+          "id": "AW1",
+          "kind": "support",
+          "statement": "A distinguishable allegedly more serious problem B is introduced beside concern A."
+        },
+        {
+          "id": "AW2",
+          "kind": "support",
+          "statement": "The severity of B is used to dismiss or defer A without supplied justification."
+        },
+        {
+          "id": "AWX1",
+          "kind": "countercheck",
+          "statement": "The target instead predicts escalation from A itself."
+        },
+        {
+          "id": "AWX2",
+          "kind": "countercheck",
+          "statement": "The comparison expresses a justified resource tradeoff rather than dismissal."
+        }
+      ],
+      "contrasts": [
+        "slippery_slope"
+      ],
+      "source_note": "MG-SCD operationalization v1 adapted from local Grounded v3 DEFINITIONS (2026-11-11); forms/cues from COCOLOFA_PATTERNS, illustrative only. Not verbatim paper extraction. Boundary choices: decisive/illicit warrant; distinguishable concerns may be related; slope requires escalation, not just negative prediction. Manual dev alignment required."
+    },
+    {
+      "label": "false_dilemma",
+      "definition": "An explicit or textually licensed implicit exhaustiveness commitment excludes relevant alternatives. Identify the restricted options and the commitment; two options need not be enumerated. Do not invent an option merely to create a binary. Recommendations alone do not suffice.",
+      "mechanism": "An explicit or textually licensed implicit exhaustiveness commitment excludes relevant alternatives. Identify the restricted options and the commitment; two options need not be enumerated. Do not invent an option merely to create a binary. Recommendations alone do not suffice.",
+      "logical_form": "Premise: Either A or B (A OR B; NOT A -> B), falsely asserting exhaustiveness -> Therefore choose A or B.",
+      "cue_examples": [
+        "Either A or B, there is no other way...",
+        "You're either with us or against us...",
+        "Pick a side / you must choose between X and Y...",
+        "The only alternative to X is total Y...",
+        "No middle ground."
+      ],
+      "criteria": [
+        {
+          "id": "FD1",
+          "kind": "support",
+          "statement": "The target commits explicitly or implicitly to restricted exhaustive alternatives."
+        },
+        {
+          "id": "FD2",
+          "kind": "support",
+          "statement": "The restriction excludes relevant alternatives without warrant."
+        },
+        {
+          "id": "FDX1",
+          "kind": "countercheck",
+          "statement": "The alternatives are genuinely exhaustive or no exhaustiveness is committed."
+        },
+        {
+          "id": "FDX2",
+          "kind": "countercheck",
+          "statement": "The defect instead concerns an unsupported causal escalation."
+        }
+      ],
+      "contrasts": [
+        "slippery_slope"
+      ],
+      "source_note": "MG-SCD operationalization v1 adapted from local Grounded v3 DEFINITIONS (2026-11-11); forms/cues from COCOLOFA_PATTERNS, illustrative only. Not verbatim paper extraction. Boundary choices: decisive/illicit warrant; distinguishable concerns may be related; slope requires escalation, not just negative prediction. Manual dev alignment required."
+    },
+    {
+      "label": "hasty_generalization",
+      "definition": "A limited or unrepresentative case/sample is used to infer a broader population or class claim. Identify case, generalized scope and the leap. The generalization may be intermediate, not the final recommendation. Broad assertions alone do not suffice.",
+      "mechanism": "A limited or unrepresentative case/sample is used to infer a broader population or class claim. Identify case, generalized scope and the leap. The generalization may be intermediate, not the final recommendation. Broad assertions alone do not suffice.",
+      "logical_form": "Limited/anecdotal subset S (subset of A) exhibits property P -> Therefore all A exhibits property P.",
+      "cue_examples": [
+        "I know someone who... therefore all of them...",
+        "In my personal experience, so it always happens...",
+        "I saw one instance, which proves everyone...",
+        "Universal quantifiers (always, never, everyone, nobody) derived from anecdotes."
+      ],
+      "criteria": [
+        {
+          "id": "HG1",
+          "kind": "support",
+          "statement": "A limited case or unrepresentative sample is offered."
+        },
+        {
+          "id": "HG2",
+          "kind": "support",
+          "statement": "A broader population or class conclusion is inferred from those cases."
+        },
+        {
+          "id": "HG3",
+          "kind": "support",
+          "statement": "The sample-to-population leap lacks sufficient justification."
+        },
+        {
+          "id": "HGX1",
+          "kind": "countercheck",
+          "statement": "The statement is a broad assertion with no sample-to-population inference."
+        },
+        {
+          "id": "HGX2",
+          "kind": "countercheck",
+          "statement": "Popularity itself, rather than a limited sample, is used as proof."
+        }
+      ],
+      "contrasts": [
+        "appeal_to_majority",
+        "slippery_slope"
+      ],
+      "source_note": "MG-SCD operationalization v1 adapted from local Grounded v3 DEFINITIONS (2026-11-11); forms/cues from COCOLOFA_PATTERNS, illustrative only. Not verbatim paper extraction. Boundary choices: decisive/illicit warrant; distinguishable concerns may be related; slope requires escalation, not just negative prediction. Manual dev alignment required."
+    },
+    {
+      "label": "slippery_slope",
+      "definition": "An action/event is claimed to produce an unwarranted escalation, progression or loss of a stopping boundary. Identify the actual transition(s) and the unsupported escalation commitment. A negative forecast, future tense, severity or \"can lead to\" alone is insufficient. Do not invent intermediate events or strengthen possibility into inevitability.",
+      "mechanism": "An action/event is claimed to produce an unwarranted escalation, progression or loss of a stopping boundary. Identify the actual transition(s) and the unsupported escalation commitment. A negative forecast, future tense, severity or \"can lead to\" alone is insufficient. Do not invent intermediate events or strengthen possibility into inevitability.",
+      "logical_form": "A occurs -> Inevitable negative deterioration or escalation (B, or B -> ... -> Z) without sufficient causal warrants.",
+      "cue_examples": [
+        "If we allow A, next will be B, and eventually Z...",
+        "A dangerous precedent / opens the floodgates / can lead to...",
+        "Where does it end? / What is next? / Who else is next?",
+        "Things will only get worse / things just get bad / if nothing is done / otherwise..."
+      ],
+      "criteria": [
+        {
+          "id": "SS1",
+          "kind": "support",
+          "statement": "An action or event is linked to a progression, escalation or loss of a stopping boundary."
+        },
+        {
+          "id": "SS2",
+          "kind": "support",
+          "statement": "The projected progression moves toward more severe outcomes."
+        },
+        {
+          "id": "SS3",
+          "kind": "support",
+          "statement": "The target passage asserts an escalation transition without an adequate causal bridge."
+        },
+        {
+          "id": "SSX1",
+          "kind": "countercheck",
+          "statement": "The target instead uses a distinct worse concern to dismiss the current concern."
+        },
+        {
+          "id": "SSX2",
+          "kind": "countercheck",
+          "statement": "The target only offers a negative forecast without an escalation commitment."
+        }
+      ],
+      "contrasts": [
+        "appeal_to_worse_problems",
+        "false_dilemma",
+        "hasty_generalization"
+      ],
+      "source_note": "MG-SCD operationalization v1 adapted from local Grounded v3 DEFINITIONS (2026-11-11); forms/cues from COCOLOFA_PATTERNS, illustrative only. Not verbatim paper extraction. Boundary choices: decisive/illicit warrant; distinguishable concerns may be related; slope requires escalation, not just negative prediction. Manual dev alignment required."
+    }
+  ]
+}

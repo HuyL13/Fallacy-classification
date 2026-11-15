@@ -1,0 +1,25 @@
+task: classification
+data_dir: data/cocolofa
+split: dev
+context: paper
+pipeline:
+  route_mode: debate_all
+  margin_threshold: 0.12 # Placeholder; selective gating requires dev tuning.
+  article_max_chars: 6000
+  variant: full
+model:
+  provider: openai_compatible
+  name: meta/llama-3.2-90b-vision-instruct
+  base_url: https://integrate.api.nvidia.com/v1
+  api_key_env: NVIDIA_API_KEY
+  temperature: 0.0
+  max_completion_tokens: 8192
+  timeout_seconds: 180
+  max_attempts: 3
+  backoff_seconds: 2
+  structured_output: false
+  input_cost_per_million: null
+  output_cost_per_million: null
+  cached_input_cost_per_million: null
+pattern_bank: src/mgscd/patterns/eight_labels.v1.json
+output_dir: outputs/mgscd-v1-nvidia-dev

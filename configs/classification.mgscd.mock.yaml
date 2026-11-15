@@ -1,0 +1,11 @@
+task: classification
+data_dir: data/cocolofa
+split: dev
+context: paper
+pipeline:
+  route_mode: debate_all
+model:
+  provider: mock
+  name: mgscd-contract-fixture
+pattern_bank: src/mgscd/patterns/eight_labels.v1.json
+output_dir: outputs/mgscd-v1-mock
