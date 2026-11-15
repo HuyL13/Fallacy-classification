@@ -364,3 +364,71 @@ def test_optional_calibrator_fit_and_roundtrip(tmp_path,sample):
     assert 0 < confidence < 1
     c.save(tmp_path/'calibrator.json')
     assert CorrectnessCalibrator.load(tmp_path/'calibrator.json').predict(held_out)==confidence
+
+
+def test_dotenv_precedence_and_repository_location(tmp_path,monkeypatch):
+    import os
+    from src.mgscd.environment import load_environment
+    names=['MG_TEST_SHELL','MG_TEST_FIRST','MG_TEST_SECOND']
+    for name in names:
+        monkeypatch.delenv(name,raising=False)
+    monkeypatch.setenv('MG_TEST_SHELL','shell-value')
+    (tmp_path/'.env').write_text('MG_TEST_SHELL=file-value\nMG_TEST_FIRST=first\n')
+    (tmp_path/'.env2').write_text('MG_TEST_FIRST=second\nMG_TEST_SECOND=extra\n')
+    monkeypatch.chdir(tmp_path.parent)
+    load_environment(tmp_path)
+    assert os.environ['MG_TEST_SHELL']=='shell-value'
+    assert os.environ['MG_TEST_FIRST']=='first'
+    assert os.environ['MG_TEST_SECOND']=='extra'
+
+
+def test_provider_endpoint_env_override(monkeypatch):
+    from src.mgscd.environment import resolve_model_config
+    settings=dict(name='test',base_url='https://default.example/v1',base_url_env='MG_TEST_ENDPOINT')
+    monkeypatch.setenv('MG_TEST_ENDPOINT','https://configured.example/v1')
+    assert resolve_model_config(settings).base_url=='https://configured.example/v1'
+    assert settings['base_url']=='https://default.example/v1'
+    monkeypatch.delenv('MG_TEST_ENDPOINT')
+    assert resolve_model_config(settings).base_url=='https://default.example/v1'
+
+
+def test_runner_loads_env_before_provider_without_logging_key(tmp_path,monkeypatch,sample):
+    import os
+    import src.mgscd.runner as runner
+    for key in ('MG_TEST_PROVIDER_KEY','MG_TEST_PROVIDER_ENDPOINT'):
+        monkeypatch.delenv(key,raising=False)
+    (tmp_path/'.env').write_text('MG_TEST_PROVIDER_KEY=synthetic-test-secret\n'
+                                 'MG_TEST_PROVIDER_ENDPOINT=https://configured.example/v1\n')
+    config=load_config('configs/classification.mgscd.v1.yaml')
+    config['model'].update(api_key_env='MG_TEST_PROVIDER_KEY',base_url_env='MG_TEST_PROVIDER_ENDPOINT',
+                           structured_output=True)
+    config['output_dir']=str(tmp_path/'run')
+    monkeypatch.setattr(runner,'ROOT',tmp_path)
+    monkeypatch.setattr(runner,'load_samples',lambda *args:([sample],{sample.sample_id:'group'},{}))
+    class EnvTransport:
+        def complete(self,payload):
+            assert os.environ['MG_TEST_PROVIDER_KEY']=='synthetic-test-secret'
+            kind=payload['response_format']['json_schema']['name'].removeprefix('mgscd_')
+            obj=MockBackend().complete(kind,payload['messages'][0]['content'],
+                                       payload['messages'][1]['content'],sample.sample_id)
+            return response(obj)
+    def backend(config,audit_path,**kwargs):
+        assert config.base_url=='https://configured.example/v1'
+        return ProviderBackend(config,audit_path,transport=EnvTransport(),**kwargs)
+    monkeypatch.setattr(runner,'ProviderBackend',backend)
+    metrics=runner.run(config,limit=1)
+    assert metrics['failed']==0 and metrics['backend']['usage']['api_calls']==6
+    for path in (tmp_path/'run').iterdir():
+        assert 'synthetic-test-secret' not in path.read_text()
+
+
+def test_missing_env_key_fails_before_output_creation(tmp_path,monkeypatch):
+    import src.mgscd.runner as runner
+    config=load_config('configs/classification.mgscd.v1.yaml')
+    config['model']['api_key_env']='MG_TEST_ABSENT_KEY'
+    config['output_dir']=str(tmp_path/'must-not-exist')
+    monkeypatch.delenv('MG_TEST_ABSENT_KEY',raising=False)
+    monkeypatch.setattr(runner,'ROOT',tmp_path)
+    with pytest.raises(RuntimeError,match='MG_TEST_ABSENT_KEY'):
+        runner.run(config,limit=1)
+    assert not Path(config['output_dir']).exists()

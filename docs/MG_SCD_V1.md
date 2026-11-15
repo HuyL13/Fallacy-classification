@@ -19,12 +19,25 @@ Mock có một mẫu tổng hợp, sáu stage calls. Không phải kết quả t
 Runner từ chối output directory đã có dữ liệu để tránh trộn các phiên bản.
 Đổi `output_dir` khi chạy lại.
 
-Profile NVIDIA dùng đúng transport và endpoint hiện có trong repo. Export
-`NVIDIA_API_KEY` trong shell; runner không tự đọc `.env`. Chạy dev nhỏ trước:
+Profile NVIDIA dùng đúng transport hiện có trong repo. Runner tự nạp `.env`,
+sau đó `.env2` ở root repo, giống runner cũ; biến đã có trong shell được ưu tiên,
+`.env2` chỉ bổ sung biến chưa được đặt. Không cần export lại key.
+Profile NVIDIA dùng `NVIDIA_API_KEY` và endpoint từ `NVIDIA_BASE_URL` nếu có,
+nếu không dùng endpoint mặc định trong YAML. Chạy dev nhỏ trước:
 
 ```bash
 python -m src.mgscd.runner --config configs/classification.mgscd.v1.yaml --limit 5
 ```
+
+Profile Marketplace dùng `MARKET_API_KEY` và `MARKET_API_BASE` trong cùng các
+file env, không cần sửa code hoặc chép key vào YAML:
+
+```bash
+python -m src.mgscd.runner --config configs/classification.mgscd.marketplace.yaml --limit 5
+```
+
+Model vẫn được chọn bằng `model.name` trong YAML. Các key không được ghi vào
+manifest/log; thiếu key sẽ báo lỗi trước khi tạo output directory hoặc gọi API.
 
 `structured_output: false` phù hợp profile NVIDIA hiện tại: schema vẫn nằm trong
 system prompt, trả về phải là JSON nghiêm ngặt. Chỉ bật native JSON Schema khi

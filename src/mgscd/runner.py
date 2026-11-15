@@ -1,6 +1,7 @@
 """Isolated MG-SCD entry point: python -m src.mgscd.runner --config ..."""
 import argparse
 import json
+import os
 import platform
 import time
 from dataclasses import asdict
@@ -10,11 +11,11 @@ from pathlib import Path
 import yaml
 
 from src.io_utils import append_jsonl, digest, file_hash, write_json
-from src.llm.config import ModelConfig
 from .backend import ProviderBackend
 from .calibration import CorrectnessCalibrator
 from .data import load_samples
 from .evaluation import evaluate
+from .environment import load_environment, resolve_model_config
 from .mock import MockBackend
 from .patterns import DEFAULT_BANK, load_bank
 from .pipeline import Pipeline, PipelineConfig
@@ -33,7 +34,7 @@ def load_config(path):
     if config['split'] not in ('train','dev','test') or config['context'] not in ('paper','article','comment_only'):
         raise ValueError('Unknown split/context')
     PipelineConfig(**config['pipeline'])
-    ModelConfig(**config['model'])
+    resolve_model_config(config['model'])
     base=path.parent.parent
     for key in ('data_dir','pattern_bank','output_dir'):
         if not isinstance(config[key],str) or not config[key]:
@@ -46,11 +47,16 @@ def load_config(path):
 def run(config, *, mock=False, limit=None, calibrator_path=None):
     if limit is not None and (type(limit) is not int or limit<1):
         raise ValueError('limit must be positive')
+    if not mock:
+        load_environment(ROOT)
     bank,pattern_hash=load_bank(config.get('pattern_bank',DEFAULT_BANK))
     pipeline_config=PipelineConfig(**config.get('pipeline',{}))
-    model_config=ModelConfig(**config['model'])
+    model_config=resolve_model_config(config['model'])
     if model_config.provider=='mock' and not mock:
         raise ValueError('Mock provider requires --mock acknowledgment')
+    if not mock and not os.environ.get(model_config.api_key_env):
+        raise RuntimeError(f'Missing {model_config.api_key_env}; set it in the shell, '
+                           'or in repository .env / .env2')
     if mock:
         samples=[Sample(sample_id='mock-001',target_comment='If we permit X, then Y, and eventually Z will happen.',
                         gold_label='slippery_slope')]
@@ -84,7 +90,7 @@ def run(config, *, mock=False, limit=None, calibrator_path=None):
                   selected_ids=[s.sample_id for s in samples],
                   article_groups={s.sample_id:groups[s.sample_id] for s in samples},
                   dataset_verification=verification,python=platform.python_version(),
-                  dependencies={name:version(name) for name in ('pydantic','PyYAML','jsonschema')},
+                  dependencies={name:version(name) for name in ('pydantic','PyYAML','jsonschema','python-dotenv')},
                   pipeline=asdict(pipeline_config),calibrator_hash=file_hash(calibrator_path) if calibrator_path else None)
     write_json(output/'manifest.json',manifest)
     # Store exact resources alongside hashes for review/reproduction.

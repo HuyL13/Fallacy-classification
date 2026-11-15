@@ -11,6 +11,7 @@ model:
   provider: openai_compatible
   name: meta/llama-3.2-90b-vision-instruct
   base_url: https://integrate.api.nvidia.com/v1
+  base_url_env: NVIDIA_BASE_URL
   api_key_env: NVIDIA_API_KEY
   temperature: 0.0
   max_completion_tokens: 8192
